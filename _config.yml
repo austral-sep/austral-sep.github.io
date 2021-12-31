@@ -4,9 +4,9 @@
 
 # Site
 title: Authur's Blog
-subtitle: 'In all that sprawling city there was everything except an end. There was no end.'
-description: 'sample blog!'
-keywords: Blog modernist
+subtitle: '不积硅步，无以至千里。'
+description: 'In all that sprawling city there was everything except an end. There was no end.'
+keywords: Blog cactus 
 author: Authur
 language: zh-CN
 timezone: 'Asia/Shanghai'
@@ -98,6 +98,46 @@ ignore:
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 theme: cactus
+theme_config:
+  colorscheme: light
+
+# Navigation
+nav:
+  home: /
+  about: /about/
+  articles: /archives/
+  projects: http://github.com/austral-sep/austral-sep.github.io
+  search: /search/
+  # LINK_NAME: URL
+
+# Blog posts list on home page
+posts_overview:
+  show_all_posts: false
+  post_count: 5
+
+# Social media links
+social_links:
+  github: http://github.com/austral-sep
+  # twitter: your-twitter-url
+  # NAME: your-NAME-url [where NAME is the name of a Font Awesome icon.]
+
+# Copyright years
+copyright:
+  start_year: 2021
+  end_year:
+
+# Comments
+disqus:
+  enabled: true
+  shortname: nineteenhundred
+
+
+# RSS
+rss:
+
+# Code Highlighting
+# highlight: COLORSCHEME_NAME 
+
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
