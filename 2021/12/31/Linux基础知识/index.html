@@ -14,7 +14,7 @@
 <meta property="og:description" content="字节对齐操作系统并非一个字节一个字节访问内存，而是按2，4，8这样的字长来访问。 因此，当CPU从存储器读数据到寄存器，IO的数据长度通常是字长。 如32位系统访问粒度是4字节(bytes), 64位系统的是8字节。 当被访问的数据长度为n字节且该数据地址为n字节对齐时，那么操作系统就可以高效地一次定位到数据， 无需多次读取，处理对齐运算等额外操作。 数据结构应该尽可能地在自然边界上对齐。如果访问">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-12-31T08:00:00.000Z">
-<meta property="article:modified_time" content="2021-12-31T08:03:34.094Z">
+<meta property="article:modified_time" content="2021-12-31T08:22:01.184Z">
 <meta property="article:author" content="Authur">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -67,7 +67,9 @@
      --><!--
        --><li><a href="/archives/">归档</a></li><!--
      --><!--
-       --><li><a href="/projects_url">项目</a></li><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/austral-sep">projects_url</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
      -->
       </ul>
     </span>
@@ -129,6 +131,8 @@
     <div class="postdate">
       
         <time datetime="2021-12-31T08:00:00.000Z" itemprop="datePublished">2021-12-31</time>
+        
+        (Updated: <time datetime="2021-12-31T08:22:01.184Z" itemprop="dateModified">2021-12-31</time>)
         
       
     </div>
@@ -234,6 +238,12 @@ echo &quot;nameserver 114.114.114.114&quot; &gt; /etc/resolv.conf
   </div>
 </article>
 
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
 
 
         
@@ -249,7 +259,9 @@ echo &quot;nameserver 114.114.114.114&quot; &gt; /etc/resolv.conf
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="/projects_url">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="http://github.com/austral-sep">projects_url</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
         
       </ul>
     </div>
@@ -291,7 +303,7 @@ echo &quot;nameserver 114.114.114.114&quot; &gt; /etc/resolv.conf
     Copyright &copy;
     
     
-    2016-2021
+    2021
     Authur
   </div>
   <div class="footer-right">
@@ -304,7 +316,9 @@ echo &quot;nameserver 114.114.114.114&quot; &gt; /etc/resolv.conf
      --><!--
        --><li><a href="/archives/">归档</a></li><!--
      --><!--
-       --><li><a href="/projects_url">项目</a></li><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/austral-sep">projects_url</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
      -->
       </ul>
     </nav>
@@ -365,6 +379,18 @@ echo &quot;nameserver 114.114.114.114&quot; &gt; /etc/resolv.conf
 <!-- Umami Analytics -->
 
 <!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'nineteenhundred';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
 
 <!-- utterances Comments -->
 
