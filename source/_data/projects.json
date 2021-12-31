@@ -1,8 +1,5 @@
 [
     {
-       "name":"powered by the following projects: "
-    },
-    {
        "name":"Hexo",
        "url":"https://hexo.io/",
        "desc":"A fast, simple & powerful blog framework"
