@@ -1,0 +1,102 @@
+{
+  "main": {
+    "id": "469a66831a8b87c0",
+    "type": "split",
+    "children": [
+      {
+        "id": "b776ae67a85c4683",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "centos 防火墙.md",
+            "mode": "source",
+            "source": false
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "1473afa7212b289b",
+    "type": "split",
+    "children": [
+      {
+        "id": "ec13230532c1e830",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7091162990683dc4",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "fce688e3739377f6",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": true,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "9b07042df34fcbd6",
+    "type": "split",
+    "children": [
+      {
+        "id": "16568e13103d114b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d16149a5cde549d3",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "centos 防火墙.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "b776ae67a85c4683",
+  "lastOpenFiles": [
+    "centos 防火墙.md",
+    "systemd-journald-service.md",
+    "hello-world.md",
+    "Nginx使用.md",
+    "未命名.md",
+    "systemd-journald.md",
+    "图表示例.md",
+    "未命名 2.md",
+    "未命名 1.md"
+  ]
+}
