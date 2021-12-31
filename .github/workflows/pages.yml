@@ -2,7 +2,7 @@
 
 name: Pages Build
 
-# 只监听 master 分支的改动
+# 只监听 master 分支的改
 on:
   push:
     branches:
