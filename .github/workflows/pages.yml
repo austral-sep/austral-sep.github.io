@@ -1,8 +1,8 @@
 .github/workflows/pages.yml
 
-name: Pages Build
+name: Pages
 
-# 只监听 master 分支的改
+# 只监听 master 分支的改动
 on:
   push:
     branches:
