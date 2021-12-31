@@ -95,46 +95,6 @@ exclude:
 ignore:
 
 
-# Cactus configure
-theme_config:
-  colorscheme: light
-
-# Navigation
-nav:
-  home: /
-  about: /about/
-  articles: /archives/
-  projects_url: http://github.com/austral-sep/austral-sep.github.io
-  search: /search/
-  # LINK_NAME: URL
-
-# Blog posts list on home page
-posts_overview:
-  show_all_posts: false
-  post_count: 5
-
-# Social media links
-social_links:
-  github: http://github.com/austral-sep
-  # twitter: your-twitter-url
-  # NAME: your-NAME-url [where NAME is the name of a Font Awesome icon.]
-
-# Copyright years
-copyright:
-  start_year: 2020
-  end_year:
-
-# Comments
-disqus:
-  enabled: true
-  shortname: nineteenhundred
-
-# RSS
-rss:
-
-# Code Highlighting
-# highlight: COLORSCHEME_NAME 
-
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
