@@ -17,7 +17,7 @@ nav:
   home: /
   about: /about/
   articles: /archives/
-  projects_url: projects_url
+  projects: projects_url
   search: /search/
   # LINK_NAME: URL
 
