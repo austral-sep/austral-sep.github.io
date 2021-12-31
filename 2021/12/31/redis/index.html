@@ -14,7 +14,7 @@
 <meta property="og:description" content="命令详解 定义Redis 是一个key-value 存储系统，是跨平台的非关系型数据库。Redis 是一个开源的使用 ANSI C 语言编写、遵守 BSD 协议、支持网络、可基于内存、分布式、可持久化的键值对(Key-Value)存储数据库，并提供多种语言的 API。Redis 通常被称为数据结构服务器，因为值（value）可以是字符串(String)、哈希(Hash)、列表(list)、集合(s">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-12-31T06:30:00.000Z">
-<meta property="article:modified_time" content="2021-12-31T08:55:06.721Z">
+<meta property="article:modified_time" content="2021-12-31T09:46:05.791Z">
 <meta property="article:author" content="Authur">
 <meta property="article:tag" content="Redis DB">
 <meta name="twitter:card" content="summary">
@@ -67,7 +67,7 @@
      --><!--
        --><li><a href="/archives/">归档</a></li><!--
      --><!--
-       --><li><a href="/projects_url">projects_url</a></li><!--
+       --><li><a href="/projects_url">项目</a></li><!--
      --><!--
        --><li><a href="/search/">搜索</a></li><!--
      -->
@@ -108,7 +108,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text">优点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#redis%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">2.1.</span> <span class="toc-text">redis适用场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis%E4%B8%8D%E9%80%82%E7%94%A8%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="toc-number">2.2.</span> <span class="toc-text">redis不适用的场景</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5redis%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">3.</span> <span class="toc-text">连接redis服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#redis-cli-%E2%80%93help"><span class="toc-number">4.</span> <span class="toc-text">redis-cli –help</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#redis-cli%E7%9A%84%E4%B8%A4%E7%A7%8D%E4%BD%BF%E7%94%A8%E6%A8%A1%E5%BC%8F"><span class="toc-number">4.1.</span> <span class="toc-text">redis-cli的两种使用模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%8E%E5%85%B6%E4%BB%96%E7%A8%8B%E5%BA%8F%E8%8E%B7%E5%8F%96%E8%BE%93%E5%85%A5"><span class="toc-number">4.2.</span> <span class="toc-text">从其他程序获取输入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CSV%E8%BE%93%E5%87%BA"><span class="toc-number">4.3.</span> <span class="toc-text">CSV输出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%9E%E9%98%BB%E5%A1%9E%E8%8E%B7%E5%8F%96%E6%89%80%E6%9C%89%E9%94%AE%E5%88%97%E8%A1%A8"><span class="toc-number">4.4.</span> <span class="toc-text">非阻塞获取所有键列表</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#redis%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">3.</span> <span class="toc-text">redis适用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#redis%E4%B8%8D%E9%80%82%E7%94%A8%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="toc-number">4.</span> <span class="toc-text">redis不适用的场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5redis%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">5.</span> <span class="toc-text">连接redis服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#redis-cli-%E2%80%93help"><span class="toc-number">6.</span> <span class="toc-text">redis-cli –help</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#redis-cli%E7%9A%84%E4%B8%A4%E7%A7%8D%E4%BD%BF%E7%94%A8%E6%A8%A1%E5%BC%8F"><span class="toc-number">6.1.</span> <span class="toc-text">redis-cli的两种使用模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E5%85%B6%E4%BB%96%E7%A8%8B%E5%BA%8F%E8%8E%B7%E5%8F%96%E8%BE%93%E5%85%A5"><span class="toc-number">6.2.</span> <span class="toc-text">从其他程序获取输入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CSV%E8%BE%93%E5%87%BA"><span class="toc-number">6.3.</span> <span class="toc-text">CSV输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E9%98%BB%E5%A1%9E%E8%8E%B7%E5%8F%96%E6%89%80%E6%9C%89%E9%94%AE%E5%88%97%E8%A1%A8"><span class="toc-number">6.4.</span> <span class="toc-text">非阻塞获取所有键列表</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -134,7 +134,7 @@
       
         <time datetime="2021-12-31T06:30:00.000Z" itemprop="datePublished">2021-12-31</time>
         
-        (Updated: <time datetime="2021-12-31T08:55:06.721Z" itemprop="dateModified">2021-12-31</time>)
+        (Updated: <time datetime="2021-12-31T09:46:05.791Z" itemprop="dateModified">2021-12-31</time>)
         
       
     </div>
@@ -155,18 +155,18 @@
 
   <div class="content" itemprop="articleBody">
     <p><a target="_blank" rel="noopener" href="https://www.php.cn/redis/444414.html">命令详解</a></p>
-<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>Redis 是一个key-value 存储系统，是跨平台的非关系型数据库。<br>Redis 是一个开源的使用 ANSI C 语言编写、遵守 BSD 协议、<strong>支持网络、可基于内存、分布式、可持久化</strong>的键值对(Key-Value)存储数据库，并提供多种语言的 API。Redis 通常被称为数据结构服务器，<strong>因为值（value）可以是<code>字符串(String)、哈希(Hash)、列表(list)、集合(sets)和有序集合(sorted sets)</code>等类型</strong></p>
-<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p><strong>速度快，完全基于内存，使用 C 语言实现，网络层使用 epoll 解决高并发问题，单线程模型避免了不必要的上下文切换及竞争条件；</strong><br>注意：单线程仅仅是说在网络请求这一模块上用一个请求处理客户端的请求，像持久化它就会重开一个线程/进程去进行处理。</p>
-<p>丰富的数据类型，Redis 有 8 种数据类型，当然常用的主要是 String、Hash、List、Set、 SortSet 这 5 种类型，他们都是基于键值的方式组织数据。每一种数据类型提供了非常丰富的操作命令，可以满足绝大部分需求，如果有特殊需求还能自己通过 lua 脚本自己创建新的命令（具备原子性）；除了提供的丰富的数据类型，Redis 还提供了像慢查询分析、性能测试、Pipeline、事务、Lua自定义命令、Bitmaps、HyperLogLog、<strong>发布/订阅</strong>、Geo 等个性化功能</p>
-<h4 id="redis适用场景"><a href="#redis适用场景" class="headerlink" title="redis适用场景"></a>redis适用场景</h4><ol>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>Redis 是一个key-value 存储系统，是跨平台的非关系型数据库。<br>Redis 是一个开源的使用 ANSI C 语言编写、遵守 BSD 协议、<strong>支持网络、可基于内存、分布式、可持久化</strong>的键值对(Key-Value)存储数据库，并提供多种语言的 API。Redis 通常被称为数据结构服务器，<strong>因为值（value）可以是<code>字符串(String)、哈希(Hash)、列表(list)、集合(sets)和有序集合(sorted sets)</code>等类型</strong>。</p>
+<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><p><strong>速度快，完全基于内存，使用 C 语言实现，网络层使用 epoll 解决高并发问题，单线程模型避免了不必要的上下文切换及竞争条件；</strong><br>注意：单线程仅仅是说在网络请求这一模块上用一个请求处理客户端的请求，像持久化它就会重开一个线程/进程去进行处理。</p>
+<p>丰富的数据类型，Redis 有 8 种数据类型，当然常用的主要是 String、Hash、List、Set、 SortSet 这 5 种类型，他们都是基于键值的方式组织数据。每一种数据类型提供了非常丰富的操作命令，可以满足绝大部分需求，如果有特殊需求还能自己通过 lua 脚本自己创建新的命令（具备原子性）；除了提供的丰富的数据类型，Redis 还提供了像慢查询分析、性能测试、Pipeline、事务、Lua自定义命令、Bitmaps、HyperLogLog、<strong>发布/订阅</strong>、Geo 等个性化功能。</p>
+<h2 id="redis适用场景"><a href="#redis适用场景" class="headerlink" title="redis适用场景"></a>redis适用场景</h2><ol>
 <li><strong>排行榜</strong>，利用 Redis 的 SortSet 数据结构能够非常方便搞定；</li>
 <li><strong>计算器/限速器</strong>，利用 Redis 中原子性的自增操作，我们可以统计类似用户点赞数、用户访问数等；限速器比较典型的使用场景是限制某个用户访问某个 API 的频率，常用的有抢购时，防止用户疯狂点击带来不必要的压力；</li>
 <li><strong>好友关系</strong>，利用集合的一些命令，比如求交集、并集、差集等，可以方便搞定一些共同好友、共同爱好之类的功能；</li>
 <li><strong>简单消息队列</strong>，除了 Redis 自身的发布/订阅模式，我们也可以利用 List 来实现一个队列机制，比如到货通知、邮件发送之类的需求，不需要高可靠，但是会带来非常大的 DB 压力，完全可以用 List 来完成异步解耦；</li>
-<li><strong>Session共享</strong>，以 PHP 为例，默认 Session 是保存在服务器的文件中，如果是集群服务，同一个用户过来可能落在不同机器上，这就会导致用户频繁登陆；采用 Redis 保存 Session 后，无论用户落在那台机器上都能够获取到对应的 Session 信息。<h4 id="redis不适用的场景"><a href="#redis不适用的场景" class="headerlink" title="redis不适用的场景"></a>redis不适用的场景</h4></li>
+<li><strong>Session共享</strong>，以 PHP 为例，默认 Session 是保存在服务器的文件中，如果是集群服务，同一个用户过来可能落在不同机器上，这就会导致用户频繁登陆；采用 Redis 保存 Session 后，无论用户落在那台机器上都能够获取到对应的 Session 信息。</li>
 </ol>
-<p>数据量太大、数据访问频率非常低的业务都不适合使用 Redis，数据太大会增加成本，访问频率太低，保存在内存中纯属浪费资源。</p>
-<h3 id="连接redis服务器"><a href="#连接redis服务器" class="headerlink" title="连接redis服务器"></a>连接redis服务器</h3><ul>
+<h2 id="redis不适用的场景"><a href="#redis不适用的场景" class="headerlink" title="redis不适用的场景"></a>redis不适用的场景</h2><p>数据量太大、数据访问频率非常低的业务都不适合使用 Redis，数据太大会增加成本，访问频率太低，保存在内存中纯属浪费资源。</p>
+<h2 id="连接redis服务器"><a href="#连接redis服务器" class="headerlink" title="连接redis服务器"></a>连接redis服务器</h2><ul>
 <li><p>连接本地的redis服务：</p>
 <pre><code>  redis-cli
   
@@ -200,11 +200,11 @@
 </code></pre>
 </li>
 </ul>
-<h3 id="redis-cli-–help"><a href="#redis-cli-–help" class="headerlink" title="redis-cli –help"></a>redis-cli –help</h3><h4 id="redis-cli的两种使用模式"><a href="#redis-cli的两种使用模式" class="headerlink" title="redis-cli的两种使用模式"></a>redis-cli的两种使用模式</h4><ol>
+<h2 id="redis-cli-–help"><a href="#redis-cli-–help" class="headerlink" title="redis-cli –help"></a>redis-cli –help</h2><h3 id="redis-cli的两种使用模式"><a href="#redis-cli的两种使用模式" class="headerlink" title="redis-cli的两种使用模式"></a>redis-cli的两种使用模式</h3><ol>
 <li><strong>交互模式</strong>：用户输入redis-cli，进入redis-cli环境，输入redis命令，并获取返回结果。</li>
 <li><strong>命令行模式</strong>：redis操作命令作为redis-cli的参数，传递给redis-cli，结果打印在标准命令行上。</li>
 </ol>
-<h4 id="从其他程序获取输入"><a href="#从其他程序获取输入" class="headerlink" title="从其他程序获取输入"></a>从其他程序获取输入</h4><ol>
+<h3 id="从其他程序获取输入"><a href="#从其他程序获取输入" class="headerlink" title="从其他程序获取输入"></a>从其他程序获取输入</h3><ol>
 <li><p>使用-x选项</p>
 <pre><code> redis-cli -x set foo &lt; /etc/services
 </code></pre>
@@ -223,10 +223,10 @@
 </code></pre>
 </li>
 </ol>
-<h4 id="CSV输出"><a href="#CSV输出" class="headerlink" title="CSV输出"></a>CSV输出</h4><p>使用redis-cli快速将数据从Redis导出到外部程序。这可以使用CSV（逗号分隔值）输出功能来完成：</p>
+<h3 id="CSV输出"><a href="#CSV输出" class="headerlink" title="CSV输出"></a>CSV输出</h3><p>使用redis-cli快速将数据从Redis导出到外部程序。这可以使用CSV（逗号分隔值）输出功能来完成：</p>
 <pre><code>redis-cli --csv lrange mylist 0 -1
 </code></pre>
-<h4 id="非阻塞获取所有键列表"><a href="#非阻塞获取所有键列表" class="headerlink" title="非阻塞获取所有键列表"></a>非阻塞获取所有键列表</h4><pre><code>redis-cli --scan --pattern &#39;user:*&#39; | wc -l
+<h3 id="非阻塞获取所有键列表"><a href="#非阻塞获取所有键列表" class="headerlink" title="非阻塞获取所有键列表"></a>非阻塞获取所有键列表</h3><pre><code>redis-cli --scan --pattern &#39;user:*&#39; | wc -l
 redis-cli --scan | head -10
       
 </code></pre>
@@ -258,7 +258,7 @@ redis-cli --scan | head -10
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="/projects_url">projects_url</a></li>
+          <li><a href="/projects_url">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -266,7 +266,7 @@ redis-cli --scan | head -10
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text">优点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#redis%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">2.1.</span> <span class="toc-text">redis适用场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis%E4%B8%8D%E9%80%82%E7%94%A8%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="toc-number">2.2.</span> <span class="toc-text">redis不适用的场景</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5redis%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">3.</span> <span class="toc-text">连接redis服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#redis-cli-%E2%80%93help"><span class="toc-number">4.</span> <span class="toc-text">redis-cli –help</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#redis-cli%E7%9A%84%E4%B8%A4%E7%A7%8D%E4%BD%BF%E7%94%A8%E6%A8%A1%E5%BC%8F"><span class="toc-number">4.1.</span> <span class="toc-text">redis-cli的两种使用模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%8E%E5%85%B6%E4%BB%96%E7%A8%8B%E5%BA%8F%E8%8E%B7%E5%8F%96%E8%BE%93%E5%85%A5"><span class="toc-number">4.2.</span> <span class="toc-text">从其他程序获取输入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CSV%E8%BE%93%E5%87%BA"><span class="toc-number">4.3.</span> <span class="toc-text">CSV输出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%9E%E9%98%BB%E5%A1%9E%E8%8E%B7%E5%8F%96%E6%89%80%E6%9C%89%E9%94%AE%E5%88%97%E8%A1%A8"><span class="toc-number">4.4.</span> <span class="toc-text">非阻塞获取所有键列表</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#redis%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">3.</span> <span class="toc-text">redis适用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#redis%E4%B8%8D%E9%80%82%E7%94%A8%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="toc-number">4.</span> <span class="toc-text">redis不适用的场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5redis%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">5.</span> <span class="toc-text">连接redis服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#redis-cli-%E2%80%93help"><span class="toc-number">6.</span> <span class="toc-text">redis-cli –help</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#redis-cli%E7%9A%84%E4%B8%A4%E7%A7%8D%E4%BD%BF%E7%94%A8%E6%A8%A1%E5%BC%8F"><span class="toc-number">6.1.</span> <span class="toc-text">redis-cli的两种使用模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E5%85%B6%E4%BB%96%E7%A8%8B%E5%BA%8F%E8%8E%B7%E5%8F%96%E8%BE%93%E5%85%A5"><span class="toc-number">6.2.</span> <span class="toc-text">从其他程序获取输入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CSV%E8%BE%93%E5%87%BA"><span class="toc-number">6.3.</span> <span class="toc-text">CSV输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E9%98%BB%E5%A1%9E%E8%8E%B7%E5%8F%96%E6%89%80%E6%9C%89%E9%94%AE%E5%88%97%E8%A1%A8"><span class="toc-number">6.4.</span> <span class="toc-text">非阻塞获取所有键列表</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -315,7 +315,7 @@ redis-cli --scan | head -10
      --><!--
        --><li><a href="/archives/">归档</a></li><!--
      --><!--
-       --><li><a href="/projects_url">projects_url</a></li><!--
+       --><li><a href="/projects_url">项目</a></li><!--
      --><!--
        --><li><a href="/search/">搜索</a></li><!--
      -->
