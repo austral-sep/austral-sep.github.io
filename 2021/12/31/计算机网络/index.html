@@ -9,12 +9,12 @@
     <meta name="description" content="网络概念子网掩码划分子网，子网掩码机制提供了子网划分的方法。将IP划分成网络地址和主机地址。其作用是：减少网络上的通信量；节省IP地址；便于管理； 解决物理网络本身的某些问题。使用子网掩码划分子网后，子网内可以通信，跨子网不能通信，子网间通信应该使用路由器，并正确配置静态路由信息。最常用的子网掩码 255.255.255.0，能够提供256-2个在同一网段（都在局域网）的主机ip。 路由器和交换机">
 <meta property="og:type" content="article">
 <meta property="og:title" content="计算机网络">
-<meta property="og:url" content="http://nineteenhundred.ml/2021/12/31/%E7%BD%91%E7%BB%9C/index.html">
+<meta property="og:url" content="http://nineteenhundred.ml/2021/12/31/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.html">
 <meta property="og:site_name" content="Authur&#39;s Blog">
 <meta property="og:description" content="网络概念子网掩码划分子网，子网掩码机制提供了子网划分的方法。将IP划分成网络地址和主机地址。其作用是：减少网络上的通信量；节省IP地址；便于管理； 解决物理网络本身的某些问题。使用子网掩码划分子网后，子网内可以通信，跨子网不能通信，子网间通信应该使用路由器，并正确配置静态路由信息。最常用的子网掩码 255.255.255.0，能够提供256-2个在同一网段（都在局域网）的主机ip。 路由器和交换机">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-12-31T06:30:00.000Z">
-<meta property="article:modified_time" content="2021-12-31T10:00:41.170Z">
+<meta property="article:modified_time" content="2021-12-31T10:07:27.232Z">
 <meta property="article:author" content="Authur">
 <meta property="article:tag" content="network UFW Iptables firewall-cmd 路由配置">
 <meta name="twitter:card" content="summary">
@@ -93,17 +93,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://nineteenhundred.ml/2021/12/31/%E7%BD%91%E7%BB%9C/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://nineteenhundred.ml/2021/12/31/%E7%BD%91%E7%BB%9C/&text=计算机网络"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://nineteenhundred.ml/2021/12/31/%E7%BD%91%E7%BB%9C/&title=计算机网络"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://nineteenhundred.ml/2021/12/31/%E7%BD%91%E7%BB%9C/&is_video=false&description=计算机网络"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=计算机网络&body=Check out this article: http://nineteenhundred.ml/2021/12/31/%E7%BD%91%E7%BB%9C/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://nineteenhundred.ml/2021/12/31/%E7%BD%91%E7%BB%9C/&title=计算机网络"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://nineteenhundred.ml/2021/12/31/%E7%BD%91%E7%BB%9C/&title=计算机网络"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://nineteenhundred.ml/2021/12/31/%E7%BD%91%E7%BB%9C/&title=计算机网络"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://nineteenhundred.ml/2021/12/31/%E7%BD%91%E7%BB%9C/&title=计算机网络"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://nineteenhundred.ml/2021/12/31/%E7%BD%91%E7%BB%9C/&name=计算机网络&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://nineteenhundred.ml/2021/12/31/%E7%BD%91%E7%BB%9C/&t=计算机网络"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://nineteenhundred.ml/2021/12/31/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://nineteenhundred.ml/2021/12/31/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/&text=计算机网络"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://nineteenhundred.ml/2021/12/31/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/&title=计算机网络"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://nineteenhundred.ml/2021/12/31/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/&is_video=false&description=计算机网络"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=计算机网络&body=Check out this article: http://nineteenhundred.ml/2021/12/31/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://nineteenhundred.ml/2021/12/31/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/&title=计算机网络"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://nineteenhundred.ml/2021/12/31/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/&title=计算机网络"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://nineteenhundred.ml/2021/12/31/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/&title=计算机网络"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://nineteenhundred.ml/2021/12/31/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/&title=计算机网络"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://nineteenhundred.ml/2021/12/31/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/&name=计算机网络&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://nineteenhundred.ml/2021/12/31/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/&t=计算机网络"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -134,7 +134,7 @@
       
         <time datetime="2021-12-31T06:30:00.000Z" itemprop="datePublished">2021-12-31</time>
         
-        (Updated: <time datetime="2021-12-31T10:00:41.170Z" itemprop="dateModified">2021-12-31</time>)
+        (Updated: <time datetime="2021-12-31T10:07:27.232Z" itemprop="dateModified">2021-12-31</time>)
         
       
     </div>
@@ -249,7 +249,7 @@
 <h3 id="iptables防火墙常用的策略"><a href="#iptables防火墙常用的策略" class="headerlink" title="iptables防火墙常用的策略"></a>iptables防火墙常用的策略</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">把INPUT规则链的默认策略设置为拒绝</span><br><span class="line">iptables -P INPUT DROP</span><br></pre></td></tr></table></figure>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">拒绝进入防火墙的所有ICMP协议数据包</span><br><span class="line">iptables -I INPUT -p icmp -j REJECT</span><br></pre></td></tr></table></figure>
 <p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/ee4ee15d3658">……</a></p>
-<h2 id="ufw"><a href="#ufw" class="headerlink" title="ufw"></a>ufw</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">快速查看 ufw 配置的方法是查看其配置文件 —— /etc/default/ufw</span><br></pre></td></tr></table></figure>
+<h2 id="ufw"><a href="#ufw" class="headerlink" title="ufw"></a>ufw</h2><p>想要快速查看 ufw 的配置可以查看其配置文件 —— /etc/default/ufw</p>
 <pre><code class="bash"># 基本命令
 $ ufw allow ssh
 $ ufw allow tcp
@@ -301,17 +301,17 @@ $ ufw disable
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://nineteenhundred.ml/2021/12/31/%E7%BD%91%E7%BB%9C/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://nineteenhundred.ml/2021/12/31/%E7%BD%91%E7%BB%9C/&text=计算机网络"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://nineteenhundred.ml/2021/12/31/%E7%BD%91%E7%BB%9C/&title=计算机网络"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://nineteenhundred.ml/2021/12/31/%E7%BD%91%E7%BB%9C/&is_video=false&description=计算机网络"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=计算机网络&body=Check out this article: http://nineteenhundred.ml/2021/12/31/%E7%BD%91%E7%BB%9C/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://nineteenhundred.ml/2021/12/31/%E7%BD%91%E7%BB%9C/&title=计算机网络"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://nineteenhundred.ml/2021/12/31/%E7%BD%91%E7%BB%9C/&title=计算机网络"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://nineteenhundred.ml/2021/12/31/%E7%BD%91%E7%BB%9C/&title=计算机网络"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://nineteenhundred.ml/2021/12/31/%E7%BD%91%E7%BB%9C/&title=计算机网络"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://nineteenhundred.ml/2021/12/31/%E7%BD%91%E7%BB%9C/&name=计算机网络&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://nineteenhundred.ml/2021/12/31/%E7%BD%91%E7%BB%9C/&t=计算机网络"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://nineteenhundred.ml/2021/12/31/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://nineteenhundred.ml/2021/12/31/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/&text=计算机网络"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://nineteenhundred.ml/2021/12/31/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/&title=计算机网络"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://nineteenhundred.ml/2021/12/31/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/&is_video=false&description=计算机网络"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=计算机网络&body=Check out this article: http://nineteenhundred.ml/2021/12/31/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://nineteenhundred.ml/2021/12/31/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/&title=计算机网络"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://nineteenhundred.ml/2021/12/31/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/&title=计算机网络"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://nineteenhundred.ml/2021/12/31/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/&title=计算机网络"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://nineteenhundred.ml/2021/12/31/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/&title=计算机网络"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://nineteenhundred.ml/2021/12/31/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/&name=计算机网络&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://nineteenhundred.ml/2021/12/31/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/&t=计算机网络"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
