@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>systemd-journald系统服务疯狂占用内存和CPU | Authur&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="原因systemd-journald是Linux下的日志系统。该日志系统默认将日志保存在内存里的&#x2F;run&#x2F;log&#x2F;journal文件夹中。这样将占用大量内存，造成系统资源紧张，进程之间相互夺取资源，从而导致系统不稳定。解决方法是创建立&#x2F;var&#x2F;log&#x2F;journal文件夹，并重启journald服务即可。 解决方法12$ mkdir &#x2F;var&#x2F;log&#x2F;journal # 将日志保存在磁盘中，需手动">
+<meta property="og:type" content="article">
+<meta property="og:title" content="systemd-journald系统服务疯狂占用内存和CPU">
+<meta property="og:url" content="http://example.com/2021/12/29/systemd-journald-service/index.html">
+<meta property="og:site_name" content="Authur&#39;s Blog">
+<meta property="og:description" content="原因systemd-journald是Linux下的日志系统。该日志系统默认将日志保存在内存里的&#x2F;run&#x2F;log&#x2F;journal文件夹中。这样将占用大量内存，造成系统资源紧张，进程之间相互夺取资源，从而导致系统不稳定。解决方法是创建立&#x2F;var&#x2F;log&#x2F;journal文件夹，并重启journald服务即可。 解决方法12$ mkdir &#x2F;var&#x2F;log&#x2F;journal # 将日志保存在磁盘中，需手动">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-29T08:39:32.000Z">
+<meta property="article:modified_time" content="2021-12-31T03:08:35.015Z">
+<meta property="article:author" content="Authur">
+<meta property="article:tag" content="journald">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Authur&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Authur&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-systemd-journald-service" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/12/29/systemd-journald-service/" class="article-date">
+  <time datetime="2021-12-29T08:39:32.000Z" itemprop="datePublished">2021-12-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      systemd-journald系统服务疯狂占用内存和CPU
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>systemd-journald是Linux下的日志系统。该日志系统默认将日志保存在内存里的/run/log/journal文件夹中。这样将占用大量内存，造成系统资源紧张，进程之间相互夺取资源，从而导致系统不稳定。解决方法是创建立/var/log/journal文件夹，并重启journald服务即可。</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir /var/<span class="built_in">log</span>/journal <span class="comment"># 将日志保存在磁盘中，需手动创建/var下的目录</span></span><br><span class="line">$ vim /etc/systemd/journald.conf <span class="comment"># 编辑journald.conf配置文件</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[Journal]</span><br><span class="line">RateLimitBurst=100</span><br><span class="line">SystemMaxUse=50M</span><br><span class="line">RuntimeMaxUse=5M</span><br><span class="line">ForwardToSyslog=no</span><br><span class="line">MaxLevelStore=warning</span><br><span class="line">MaxLevelSyslog=warning</span><br><span class="line">MaxLevelKMsg=warning</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl restart systemd-journald.service <span class="comment"># 重启journald服务</span></span><br><span class="line">$ du -h /run/<span class="built_in">log</span>/journal <span class="comment"># 检查内存中日志是否变为0M</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><h3 id="日志信息筛选"><a href="#日志信息筛选" class="headerlink" title="日志信息筛选"></a>日志信息筛选</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ journalctl -f <span class="comment"># 类似 tail -f 功能，持续显示journal日志内容</span></span><br><span class="line">$ journalctl -r <span class="comment"># 反向输出，显示最新的输出到最旧的输出</span></span><br><span class="line">$ journalctl -n 20 <span class="comment"># 显示最新的20条日志</span></span><br><span class="line">$ journalctl -p warning <span class="comment"># 按信息严重等级显示</span></span><br><span class="line">$ journalctl --since yesterday --unitl today <span class="comment"># 设置开始与结束时间，只显示某段时间范围内的数据</span></span><br><span class="line">$ _SYSTEMD_UNIT=unit.service：只输出某个服务的信息</span><br><span class="line">$ _COMM=bash：只输出与 bash 有关的信息</span><br><span class="line">$ _PID=pid：只输出某个 PID 的信息</span><br><span class="line">$ _UID=uid：只输出某个 uid 的信息</span><br><span class="line">$ SYSLOG_FACILITY=[0-23]：使用 syslog.h 规范的服务相对应的序号来显示指定数据</span><br></pre></td></tr></table></figure>
+
+<h3 id="日志信息管理"><a href="#日志信息管理" class="headerlink" title="日志信息管理"></a>日志信息管理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ journalctl --disk-usage <span class="comment"># 检查当前journald使用的磁盘量</span></span><br><span class="line">$ journalctl --vacuum-time=2d <span class="comment"># 清除2天前的日志信息</span></span><br><span class="line">$ journalctl --vacuum-size=10M <span class="comment"># 只保留10M日志容量</span></span><br><span class="line">$ journalctl --verify <span class="comment"># 检查日志文件是否完整无损坏</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/12/29/systemd-journald-service/" data-id="ckxtth36f0003c0n2gec690d4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/journald/" rel="tag">journald</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/12/30/Nginx%E4%BD%BF%E7%94%A8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Nginx使用
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/12/29/centos%20%E9%98%B2%E7%81%AB%E5%A2%99/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Centos防火墙</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/firewalld/" rel="tag">firewalld</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/journald/" rel="tag">journald</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web%E8%BD%BB%E9%87%8F%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="tag">web轻量服务器</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/firewalld/" style="font-size: 10px;">firewalld</a> <a href="/tags/journald/" style="font-size: 10px;">journald</a> <a href="/tags/web%E8%BD%BB%E9%87%8F%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">web轻量服务器</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/12/30/Nginx%E4%BD%BF%E7%94%A8/">Nginx使用</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/systemd-journald-service/">systemd-journald系统服务疯狂占用内存和CPU</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/centos%20%E9%98%B2%E7%81%AB%E5%A2%99/">Centos防火墙</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Authur<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
