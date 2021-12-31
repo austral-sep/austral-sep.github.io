@@ -13,7 +13,7 @@ timezone: 'Asia/Shanghai'
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+url: http://nineteenhundred.ml
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -94,10 +94,8 @@ include:
 exclude:
 ignore:
 
-# Extensions
-## Plugins: https://hexo.io/plugins/
-## Themes: https://hexo.io/themes/
-theme: cactus
+
+# Cactus configure
 theme_config:
   colorscheme: light
 
@@ -106,7 +104,7 @@ nav:
   home: /
   about: /about/
   articles: /archives/
-  projects: http://github.com/austral-sep/austral-sep.github.io
+  projects_url: http://github.com/austral-sep/austral-sep.github.io
   search: /search/
   # LINK_NAME: URL
 
@@ -123,7 +121,7 @@ social_links:
 
 # Copyright years
 copyright:
-  start_year: 2021
+  start_year: 2020
   end_year:
 
 # Comments
@@ -131,12 +129,16 @@ disqus:
   enabled: true
   shortname: nineteenhundred
 
-
 # RSS
 rss:
 
 # Code Highlighting
 # highlight: COLORSCHEME_NAME 
+
+# Extensions
+## Plugins: https://hexo.io/plugins/
+## Themes: https://hexo.io/themes/
+theme: cactus
 
 
 # Deployment
