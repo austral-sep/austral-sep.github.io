@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="字节对齐操作系统并非一个字节一个字节访问内存，而是按2，4，8这样的字长来访问。 因此，当CPU从存储器读数据到寄存器，IO的数据长度通常是字长。 如32位系统访问粒度是4字节(bytes), 64位系统的是8字节。 当被访问的数据长度为n字节且该数据地址为n字节对齐时，那么操作系统就可以高效地一次定位到数据， 无需多次读取，处理对齐运算等额外操作。 数据结构应该尽可能地在自然边界上对齐。如果访问">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux基础知识">
+<meta property="og:url" content="http://nineteenhundred.ml/2021/12/31/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:site_name" content="Authur&#39;s Blog">
+<meta property="og:description" content="字节对齐操作系统并非一个字节一个字节访问内存，而是按2，4，8这样的字长来访问。 因此，当CPU从存储器读数据到寄存器，IO的数据长度通常是字长。 如32位系统访问粒度是4字节(bytes), 64位系统的是8字节。 当被访问的数据长度为n字节且该数据地址为n字节对齐时，那么操作系统就可以高效地一次定位到数据， 无需多次读取，处理对齐运算等额外操作。 数据结构应该尽可能地在自然边界上对齐。如果访问">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-31T08:00:00.000Z">
+<meta property="article:modified_time" content="2021-12-31T08:03:34.094Z">
+<meta property="article:author" content="Authur">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Linux基础知识</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2021/12/31/%E6%A0%B9%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9Frootfs%E7%AE%80%E4%BB%8B/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://nineteenhundred.ml/2021/12/31/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://nineteenhundred.ml/2021/12/31/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&text=Linux基础知识"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://nineteenhundred.ml/2021/12/31/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=Linux基础知识"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://nineteenhundred.ml/2021/12/31/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&is_video=false&description=Linux基础知识"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux基础知识&body=Check out this article: http://nineteenhundred.ml/2021/12/31/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://nineteenhundred.ml/2021/12/31/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=Linux基础知识"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://nineteenhundred.ml/2021/12/31/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=Linux基础知识"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://nineteenhundred.ml/2021/12/31/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=Linux基础知识"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://nineteenhundred.ml/2021/12/31/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=Linux基础知识"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://nineteenhundred.ml/2021/12/31/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&name=Linux基础知识&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://nineteenhundred.ml/2021/12/31/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&t=Linux基础知识"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AD%97%E8%8A%82%E5%AF%B9%E9%BD%90"><span class="toc-number">1.</span> <span class="toc-text">字节对齐</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%A7%E7%AB%AF%EF%BC%9A%E9%AB%98%E5%B0%BE%E7%AB%AF%EF%BC%8C%E5%B0%8F%E7%AB%AF%EF%BC%9A%E4%BD%8E%E5%B0%BE%E7%AB%AF%E3%80%82"><span class="toc-number">2.</span> <span class="toc-text">大端：高尾端，小端：低尾端。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%A3%E5%BC%95%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">解引用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#etc-init-d"><span class="toc-number">4.</span> <span class="toc-text">&#x2F;etc&#x2F;init.d</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#etc-rc-d"><span class="toc-number">4.0.1.</span> <span class="toc-text">&#x2F;etc&#x2F;rc#.d</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#etc-rc-local"><span class="toc-number">4.0.2.</span> <span class="toc-text">&#x2F;etc&#x2F;rc.local</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91%E6%93%8D%E4%BD%9C%E7%AC%A6%EF%BC%88%E7%AE%A1%E9%81%93%E5%91%BD%E4%BB%A4%EF%BC%89%EF%BC%9A"><span class="toc-number">5.</span> <span class="toc-text">重定向操作符（管道命令）：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip"><span class="toc-number">6.</span> <span class="toc-text">设置静态ip</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE%E5%B7%A5%E5%85%B7"><span class="toc-number">7.</span> <span class="toc-text">网络配置工具</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Linux基础知识
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Authur</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-12-31T08:00:00.000Z" itemprop="datePublished">2021-12-31</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Linux/" rel="tag">Linux</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="字节对齐"><a href="#字节对齐" class="headerlink" title="字节对齐"></a>字节对齐</h1><pre><code>操作系统并非一个字节一个字节访问内存，而是按2，4，8这样的字长来访问。 因此，当CPU从存储器读数据到寄存器，IO的数据长度通常是字长。 如32位系统访问粒度是4字节(bytes), 64位系统的是8字节。 当被访问的数据长度为n字节且该数据地址为n字节对齐时，那么操作系统就可以高效地一次定位到数据， 无需多次读取，处理对齐运算等额外操作。 数据结构应该尽可能地在自然边界上对齐。如果访问未对齐的内存，CPU需要做两次内存访问。
+</code></pre>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">yikou_s</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">double</span> d;</span><br><span class="line"><span class="keyword">char</span> c;</span><br><span class="line"><span class="keyword">int</span> i;</span><br><span class="line">&#125; <span class="keyword">yikou_t</span>;</span><br><span class="line"><span class="keyword">sizeof</span>(<span class="keyword">yikou_t</span>) = <span class="number">16</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">yikou_s</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">char</span> c;</span><br><span class="line"><span class="keyword">double</span> d;</span><br><span class="line"><span class="keyword">int</span> i;</span><br><span class="line">&#125; <span class="keyword">yikou_t</span>;</span><br><span class="line"><span class="keyword">sizeof</span>(<span class="keyword">yikou_t</span>) = <span class="number">24</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack(4)</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">yikou_s</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">char</span> c;</span><br><span class="line"><span class="keyword">double</span> d;</span><br><span class="line"><span class="keyword">int</span> i;</span><br><span class="line">&#125; <span class="keyword">yikou_t</span>;</span><br><span class="line"><span class="keyword">sizeof</span>(<span class="keyword">yikou_t</span>) = <span class="number">16</span></span><br></pre></td></tr></table></figure>
+<h1 id="大端：高尾端，小端：低尾端。"><a href="#大端：高尾端，小端：低尾端。" class="headerlink" title="大端：高尾端，小端：低尾端。"></a>大端：高尾端，小端：低尾端。</h1><p>大小端模式各有优势：小端模式强制转换类型时不需要调整字节内容，直接截取低字节即可；大端模式由于符号位为第一个字节，很方便判断正负。</p>
+<h1 id="解引用"><a href="#解引用" class="headerlink" title="解引用"></a>解引用</h1><p>在 C 语言中通过运算符 * 就可以拿到一个指针所指地址的内容了</p>
+<h1 id="etc-init-d"><a href="#etc-init-d" class="headerlink" title="/etc/init.d"></a>/etc/init.d</h1><p> 里面包含了一系列系统里面服务的开启和停止的脚本。<br> 这些系统系统服务像一个高效率的机器一样在这些目录间共同工作。有时候你想在不使用kill或者killall进程的情况下，干净的启动或者停止一个脚本的时候，inin.d这个目录就派上用场了。</p>
+<p> <code>/etc/init.d/command OPTION</code></p>
+<h3 id="etc-rc-d"><a href="#etc-rc-d" class="headerlink" title="/etc/rc#.d"></a>/etc/rc#.d</h3><p>当你查看/etc目录时，你会发现许多rc#.d形式的目录。（#代表数字0-6，指相对的初始化水平）这些目录中包含许多进程的控制脚本。这些脚本以’K’或者’S’开头。所有以’K’开头的脚本先于以’S’开头的脚本运行。这些脚本所在位置将决定这些脚本启动的时间。其中的脚本只是init.d脚本的链接。</p>
+<h3 id="etc-rc-local"><a href="#etc-rc-local" class="headerlink" title="/etc/rc.local"></a>/etc/rc.local</h3><p>里面脚本是在系统初始化级别的脚本运行之后再执行的</p>
+<h1 id="重定向操作符（管道命令）："><a href="#重定向操作符（管道命令）：" class="headerlink" title="重定向操作符（管道命令）："></a>重定向操作符（管道命令）：</h1><table>
+<thead>
+<tr>
+<th align="center">重定向操作符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">&gt;</td>
+<td>将命令输出写入到文件或设备（例如打印机）中，而不是写在命令提示符窗口中。</td>
+</tr>
+<tr>
+<td align="center">&lt;</td>
+<td>从文件中而不是从键盘中读入命令输入。</td>
+</tr>
+<tr>
+<td align="center">&gt;&gt;</td>
+<td>将命令输出添加到文件末尾而不删除文件中的信息。</td>
+</tr>
+<tr>
+<td align="center">&gt;&amp;</td>
+<td>将一个<strong>句柄</strong>的输出写入到另一个句柄的输入中。</td>
+</tr>
+<tr>
+<td align="center">&lt;&amp;</td>
+<td>从一个<strong>句柄</strong>读取输入并将其写入到另一个句柄输出中。</td>
+</tr>
+<tr>
+<td align="center">|</td>
+<td>从一个命令中读取输出并将其写入另一个命令的输入中。也称作管道。</td>
+</tr>
+</tbody></table>
+<p>标准输入0 标准输出1 标准错误输出2<br>2&gt;&amp;1: 将标准错误输出重定向到标准输出</p>
+<h1 id="设置静态ip"><a href="#设置静态ip" class="headerlink" title="设置静态ip"></a>设置静态ip</h1><p><strong>1. 把命令加入到/etc/rc.local</strong></p>
+<pre><code>ip addr add 192.168.26.74/32 dev eth1
+</code></pre>
+<p>or</p>
+<pre><code>PATH=/sbin:/bin:/usr/sbin:/usr/bin 
+ifconfig eth0 192.168.1.115 netmask 255.255.255.0 
+route add default gw 192.168.1.1
+echo &quot;nameserver 114.114.114.114&quot; &gt; /etc/resolv.conf
+</code></pre>
+<p><strong>2. 高可用双机倒换后进行虚拟ip的增加</strong><br><strong>3. 在/etc/sysconfig/network-scripts添加网卡名字</strong></p>
+<ul>
+<li><p>配置eth0网卡  <code>vim ifcfg-eth0</code></p>
+<pre><code>  DEVICE=eth2
+  HWADDR=00:0C:29:8E:06:49
+  TYPE=Ethernet
+  ONBOOT=yes
+  BOOTPROTO=static
+  IPADDR=192.168.113.110
+  NETMASK=255.255.255.0
+  GATEWAY=192.168.113.245
+  DNS1=114.114.114.114
+  DNS2=8.8.8.8
+</code></pre>
+</li>
+</ul>
+<ul>
+<li><p>配置文件保存后重启网络服务</p>
+<pre><code>  service network restart
+</code></pre>
+</li>
+</ul>
+<h1 id="网络配置工具"><a href="#网络配置工具" class="headerlink" title="网络配置工具"></a>网络配置工具</h1><blockquote>
+<p>ifconfig: interface config<br>ip addr<br>iwlist: wireless<br>iwconfig</p>
+</blockquote>
+<p>列出无线网卡可以接入的热点</p>
+<pre><code>iwlist wlan0 scan | grep SSID
+</code></pre>
+<p>netstat 的命令用来显示网络状态</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/projects_url">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AD%97%E8%8A%82%E5%AF%B9%E9%BD%90"><span class="toc-number">1.</span> <span class="toc-text">字节对齐</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%A7%E7%AB%AF%EF%BC%9A%E9%AB%98%E5%B0%BE%E7%AB%AF%EF%BC%8C%E5%B0%8F%E7%AB%AF%EF%BC%9A%E4%BD%8E%E5%B0%BE%E7%AB%AF%E3%80%82"><span class="toc-number">2.</span> <span class="toc-text">大端：高尾端，小端：低尾端。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%A3%E5%BC%95%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">解引用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#etc-init-d"><span class="toc-number">4.</span> <span class="toc-text">&#x2F;etc&#x2F;init.d</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#etc-rc-d"><span class="toc-number">4.0.1.</span> <span class="toc-text">&#x2F;etc&#x2F;rc#.d</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#etc-rc-local"><span class="toc-number">4.0.2.</span> <span class="toc-text">&#x2F;etc&#x2F;rc.local</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91%E6%93%8D%E4%BD%9C%E7%AC%A6%EF%BC%88%E7%AE%A1%E9%81%93%E5%91%BD%E4%BB%A4%EF%BC%89%EF%BC%9A"><span class="toc-number">5.</span> <span class="toc-text">重定向操作符（管道命令）：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip"><span class="toc-number">6.</span> <span class="toc-text">设置静态ip</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE%E5%B7%A5%E5%85%B7"><span class="toc-number">7.</span> <span class="toc-text">网络配置工具</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://nineteenhundred.ml/2021/12/31/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://nineteenhundred.ml/2021/12/31/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&text=Linux基础知识"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://nineteenhundred.ml/2021/12/31/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=Linux基础知识"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://nineteenhundred.ml/2021/12/31/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&is_video=false&description=Linux基础知识"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux基础知识&body=Check out this article: http://nineteenhundred.ml/2021/12/31/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://nineteenhundred.ml/2021/12/31/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=Linux基础知识"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://nineteenhundred.ml/2021/12/31/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=Linux基础知识"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://nineteenhundred.ml/2021/12/31/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=Linux基础知识"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://nineteenhundred.ml/2021/12/31/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=Linux基础知识"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://nineteenhundred.ml/2021/12/31/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&name=Linux基础知识&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://nineteenhundred.ml/2021/12/31/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&t=Linux基础知识"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2021
+    Authur
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
