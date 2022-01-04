@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title></title>
+      <link href="/2022/01/04/markdown%20%E8%89%B2%E5%BD%A9%E8%AF%95%E9%AA%8C/"/>
+      <url>/2022/01/04/markdown%20%E8%89%B2%E5%BD%A9%E8%AF%95%E9%AA%8C/</url>
+      
+        <content type="html"><![CDATA[<p>使用 <code>color</code> 的标签<br><code>&lt;font color=&quot;red&quot;&gt;红色&lt;/font&gt;</code><br><font color = "rgb(200, 100, 100)">红色</font> : color = “rgb(200, 100, 100)”<br><font color="green">绿色</font> : color = “green”<br><font color="#007bff">蓝色</font> : color = “#007bff”</p><p>使用 <code>style</code> 的标签<br><code>&lt;font style=&quot;color: red&quot;&gt;红色&lt;/font&gt;</code><br><font style="color: #ddff00">黄色</font> : style = “color: #ddff00”<br><font style="background: #c86464">使用 rgb 颜色值</font> : style = “background: #c86464”</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Linux基础知识</title>
       <link href="/2022/01/04/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
       <url>/2022/01/04/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
