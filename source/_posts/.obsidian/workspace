@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "计算机网络.md",
+            "file": "Linux基础知识.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "计算机网络.md",
+                "file": "Linux基础知识.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -89,8 +89,8 @@
   },
   "active": "b776ae67a85c4683",
   "lastOpenFiles": [
-    "计算机网络.md",
     "Linux基础知识.md",
+    "计算机网络.md",
     "Nginx使用.md",
     "redis.md",
     "systemd-journald-service.md",
