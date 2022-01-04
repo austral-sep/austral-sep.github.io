@@ -1,7 +1,8 @@
 ---
 title: 根文件系统rootfs简介
 date: 2021-12-31 15:30:00
-tag: rootfs linux
+tag: rootfs 
+categories: Linux
 ---
 
 # Root File System
