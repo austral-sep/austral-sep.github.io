@@ -2,6 +2,7 @@
 title: Centos防火墙
 date: 2021-12-29 16:38:10
 tags: firewalld
+categories: 网络
 ---
 ## 安装firewalld
 ```bash

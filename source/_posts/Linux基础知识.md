@@ -1,6 +1,6 @@
 ---
 title: Linux基础知识
-date: 2021-12-31 16:00:00
+date: 2022-01-04 16:00:00
 categories: Linux
 ---
 
