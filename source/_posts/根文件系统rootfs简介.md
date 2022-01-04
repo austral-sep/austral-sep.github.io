@@ -2,7 +2,9 @@
 title: 根文件系统rootfs简介
 date: 2021-12-31 15:30:00
 tag: rootfs 
-categories: Linux
+categories: 
+- Linux
+	- 嵌入式
 ---
 
 # Root File System
