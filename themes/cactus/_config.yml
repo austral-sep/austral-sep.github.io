@@ -59,7 +59,7 @@ archive:
 # Options:
 #   - show_updated: show the last modification date.
 post:
-  show_updated: Ture
+  show_updated: flase
 
 # Customize the copyright years
 # Note: if start_year/end_year not provided, will use current year.
@@ -155,6 +155,7 @@ utterances:
   issue_term: pathname
   label: Comment
   theme: github-dark
+  crossorigin: anonymous
 
 # Fill in your Google Analytics tracking ID to enable Google Analytics.
 google_analytics:
