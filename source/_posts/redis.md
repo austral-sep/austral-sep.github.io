@@ -1,7 +1,9 @@
 ---
 title: Redis使用
 date: 2021-12-31 14:30:00
-tags: Redis DB
+tags: 
+	- Redis 
+	- DB
 ---
 
 <!-- [命令详解](https://www.php.cn/redis/444414.html) -->
