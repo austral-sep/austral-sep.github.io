@@ -4,7 +4,7 @@ date: 2021-12-31 15:30:00
 tags: rootfs 
 categories: 
 - Linux
-	- 嵌入式
+- 嵌入式
 ---
 
 # Root File System
