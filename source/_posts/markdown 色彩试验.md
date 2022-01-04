@@ -1,3 +1,8 @@
+---
+title: markdown 色彩试验
+categories:
+- markdown
+---
 使用 `color` 的标签
 `<font color="red">红色</font>`
 <font color = "rgb(200, 100, 100)">红色</font> : color = "rgb(200, 100, 100)"
