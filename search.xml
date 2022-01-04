@@ -4,25 +4,6 @@
   
     
     <entry>
-      <title>Linux基础知识</title>
-      <link href="/2021/12/31/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
-      <url>/2021/12/31/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
-      
-        <content type="html"><![CDATA[<h2 id="字节对齐"><a href="#字节对齐" class="headerlink" title="字节对齐"></a>字节对齐</h2><p>操作系统并非一个字节一个字节访问内存，而是按2，4，8这样的字长来访问。 因此，当CPU从存储器读数据到寄存器，IO的数据长度通常是字长。 如32位系统访问粒度是4字节(bytes), 64位系统的是8字节。 当被访问的数据长度为n字节且该数据地址为n字节对齐时，那么操作系统就可以高效地一次定位到数据， 无需多次读取，处理对齐运算等额外操作。 数据结构应该尽可能地在自然边界上对齐。如果访问未对齐的内存，CPU需要做两次内存访问。</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">yikou_s</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">double</span> d;</span><br><span class="line"><span class="keyword">char</span> c;</span><br><span class="line"><span class="keyword">int</span> i;</span><br><span class="line">&#125; <span class="keyword">yikou_t</span>;</span><br><span class="line"><span class="keyword">sizeof</span>(<span class="keyword">yikou_t</span>) = <span class="number">16</span></span><br></pre></td></tr></table></figure><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">yikou_s</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">char</span> c;</span><br><span class="line"><span class="keyword">double</span> d;</span><br><span class="line"><span class="keyword">int</span> i;</span><br><span class="line">&#125; <span class="keyword">yikou_t</span>;</span><br><span class="line"><span class="keyword">sizeof</span>(<span class="keyword">yikou_t</span>) = <span class="number">24</span></span><br></pre></td></tr></table></figure><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack(4)</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">yikou_s</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">char</span> c;</span><br><span class="line"><span class="keyword">double</span> d;</span><br><span class="line"><span class="keyword">int</span> i;</span><br><span class="line">&#125; <span class="keyword">yikou_t</span>;</span><br><span class="line"><span class="keyword">sizeof</span>(<span class="keyword">yikou_t</span>) = <span class="number">16</span></span><br></pre></td></tr></table></figure><h2 id="大端：高尾端，小端：低尾端。"><a href="#大端：高尾端，小端：低尾端。" class="headerlink" title="大端：高尾端，小端：低尾端。"></a>大端：高尾端，小端：低尾端。</h2><p>大小端模式各有优势：小端模式强制转换类型时不需要调整字节内容，直接截取低字节即可；大端模式由于符号位为第一个字节，很方便判断正负。</p><h2 id="解引用"><a href="#解引用" class="headerlink" title="解引用"></a>解引用</h2><p>在 C 语言中通过运算符 * 就可以拿到一个指针所指地址的内容了</p><h2 id="etc-init-d"><a href="#etc-init-d" class="headerlink" title="/etc/init.d"></a>/etc/init.d</h2><p> 里面包含了一系列系统里面服务的开启和停止的脚本。<br> 这些系统系统服务像一个高效率的机器一样在这些目录间共同工作。有时候你想在不使用kill或者killall进程的情况下，干净的启动或者停止一个脚本的时候，inin.d这个目录就派上用场了。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ /etc/init.d/<span class="built_in">command</span> OPTION</span><br></pre></td></tr></table></figure><ol><li>/etc/rc#.d</li></ol><p>当你查看/etc目录时，你会发现许多rc#.d形式的目录。（#代表数字0-6，指相对的初始化水平）这些目录中包含许多进程的控制脚本。这些脚本以’K’或者’S’开头。所有以’K’开头的脚本先于以’S’开头的脚本运行。这些脚本所在位置将决定这些脚本启动的时间。其中的脚本只是init.d脚本的链接。</p><ol start="2"><li>/etc/rc.local </li></ol><p>里面脚本是在系统初始化级别的脚本运行之后再执行的。</p><h2 id="重定向操作符（管道命令）"><a href="#重定向操作符（管道命令）" class="headerlink" title="重定向操作符（管道命令）"></a>重定向操作符（管道命令）</h2><table><thead><tr><th align="center">重定向操作符</th><th>说明</th></tr></thead><tbody><tr><td align="center">&gt;</td><td>将命令输出写入到文件或设备（例如打印机）中，而不是写在命令提示符窗口中。</td></tr><tr><td align="center">&lt;</td><td>从文件中而不是从键盘中读入命令输入。</td></tr><tr><td align="center">&gt;&gt;</td><td>将命令输出添加到文件末尾而不删除文件中的信息。</td></tr><tr><td align="center">&gt;&amp;</td><td>将一个<strong>句柄</strong>的输出写入到另一个句柄的输入中。</td></tr><tr><td align="center">&lt;&amp;</td><td>从一个<strong>句柄</strong>读取输入并将其写入到另一个句柄输出中。</td></tr><tr><td align="center">|</td><td>从一个命令中读取输出并将其写入另一个命令的输入中。也称作管道。</td></tr></tbody></table><p>标准输入0 标准输出1 标准错误输出2<br>2&gt;&amp;1: 将标准错误输出重定向到标准输出</p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> Linux </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>根文件系统rootfs简介</title>
       <link href="/2021/12/31/%E6%A0%B9%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9Frootfs%E7%AE%80%E4%BB%8B/"/>
       <url>/2021/12/31/%E6%A0%B9%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9Frootfs%E7%AE%80%E4%BB%8B/</url>
@@ -34,25 +15,6 @@
         <tags>
             
             <tag> rootfs linux </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Redis使用</title>
-      <link href="/2021/12/31/redis/"/>
-      <url>/2021/12/31/redis/</url>
-      
-        <content type="html"><![CDATA[<p><a href="https://www.php.cn/redis/444414.html">命令详解</a></p><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>Redis 是一个key-value 存储系统，是跨平台的非关系型数据库。<br>Redis 是一个开源的使用 ANSI C 语言编写、遵守 BSD 协议、<strong>支持网络、可基于内存、分布式、可持久化</strong>的键值对(Key-Value)存储数据库，并提供多种语言的 API。Redis 通常被称为数据结构服务器，<strong>因为值（value）可以是<code>字符串(String)、哈希(Hash)、列表(list)、集合(sets)和有序集合(sorted sets)</code>等类型</strong>。</p><h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><p><strong>速度快，完全基于内存，使用 C 语言实现，网络层使用 epoll 解决高并发问题，单线程模型避免了不必要的上下文切换及竞争条件；</strong><br>注意：单线程仅仅是说在网络请求这一模块上用一个请求处理客户端的请求，像持久化它就会重开一个线程/进程去进行处理。</p><p>丰富的数据类型，Redis 有 8 种数据类型，当然常用的主要是 String、Hash、List、Set、 SortSet 这 5 种类型，他们都是基于键值的方式组织数据。每一种数据类型提供了非常丰富的操作命令，可以满足绝大部分需求，如果有特殊需求还能自己通过 lua 脚本自己创建新的命令（具备原子性）；除了提供的丰富的数据类型，Redis 还提供了像慢查询分析、性能测试、Pipeline、事务、Lua自定义命令、Bitmaps、HyperLogLog、<strong>发布/订阅</strong>、Geo 等个性化功能。</p><h2 id="redis适用场景"><a href="#redis适用场景" class="headerlink" title="redis适用场景"></a>redis适用场景</h2><ol><li><strong>排行榜</strong>，利用 Redis 的 SortSet 数据结构能够非常方便搞定；</li><li><strong>计算器/限速器</strong>，利用 Redis 中原子性的自增操作，我们可以统计类似用户点赞数、用户访问数等；限速器比较典型的使用场景是限制某个用户访问某个 API 的频率，常用的有抢购时，防止用户疯狂点击带来不必要的压力；</li><li><strong>好友关系</strong>，利用集合的一些命令，比如求交集、并集、差集等，可以方便搞定一些共同好友、共同爱好之类的功能；</li><li><strong>简单消息队列</strong>，除了 Redis 自身的发布/订阅模式，我们也可以利用 List 来实现一个队列机制，比如到货通知、邮件发送之类的需求，不需要高可靠，但是会带来非常大的 DB 压力，完全可以用 List 来完成异步解耦；</li><li><strong>Session共享</strong>，以 PHP 为例，默认 Session 是保存在服务器的文件中，如果是集群服务，同一个用户过来可能落在不同机器上，这就会导致用户频繁登陆；采用 Redis 保存 Session 后，无论用户落在那台机器上都能够获取到对应的 Session 信息。</li></ol><h2 id="redis不适用的场景"><a href="#redis不适用的场景" class="headerlink" title="redis不适用的场景"></a>redis不适用的场景</h2><p>数据量太大、数据访问频率非常低的业务都不适合使用 Redis，数据太大会增加成本，访问频率太低，保存在内存中纯属浪费资源。</p><h2 id="连接redis服务器"><a href="#连接redis服务器" class="headerlink" title="连接redis服务器"></a>连接redis服务器</h2><ul><li><p>连接本地的redis服务：</p><pre><code>  redis-cli  </code></pre></li><li><p>选择数据库：</p><pre><code>  select index    127.0.0.1:6379&gt; select 4  OK  127.0.0.1:6379[4]&gt;</code></pre></li></ul><ul><li><p>连接远程的redis服务：</p><pre><code>  redis-cli -h host -p port -a password  </code></pre></li><li><p>使用PING命令检测redis服务是否连接成功</p><pre><code>  $ redis-cli  127.0.0.1:6379&gt;  127.0.0.1:6379&gt; PING  PONG  </code></pre></li><li><p>避免中文乱码：</p><pre><code>  redis-cli --raw</code></pre></li></ul><h2 id="redis-cli-–help"><a href="#redis-cli-–help" class="headerlink" title="redis-cli –help"></a>redis-cli –help</h2><h3 id="redis-cli的两种使用模式"><a href="#redis-cli的两种使用模式" class="headerlink" title="redis-cli的两种使用模式"></a>redis-cli的两种使用模式</h3><ol><li><strong>交互模式</strong>：用户输入redis-cli，进入redis-cli环境，输入redis命令，并获取返回结果。</li><li><strong>命令行模式</strong>：redis操作命令作为redis-cli的参数，传递给redis-cli，结果打印在标准命令行上。</li></ol><h3 id="从其他程序获取输入"><a href="#从其他程序获取输入" class="headerlink" title="从其他程序获取输入"></a>从其他程序获取输入</h3><ol><li><p>使用-x选项</p><pre><code> redis-cli -x set foo &lt; /etc/services</code></pre><p> 上面的例子中，没指定 SET 命令的最后一个参数，但使用了-x选项，并将文件重定向到CLI的标准输入。因此，输入被读取，并用作命令的最后一个参数。</p></li></ol><ol start="2"><li><p>另一种方法是把redis-cli要执行的一系列写入文本文件，<br>依次执行commands.txt中的所有命令，就好像它们是由用户交互键入的一样。如果需要，可以在文件内用引号，以便可以在其中包含带空格或换行符的单个参数或其他特殊字符</p><pre><code> $ cat /tmp/commands.txt set foo &quot;This is a single argument&quot; strlen foo  $ cat /tmp/commands.txt | redis-cli OK (integer) 25</code></pre></li></ol><h3 id="CSV输出"><a href="#CSV输出" class="headerlink" title="CSV输出"></a>CSV输出</h3><p>使用redis-cli快速将数据从Redis导出到外部程序。这可以使用CSV（逗号分隔值）输出功能来完成：</p><pre><code>redis-cli --csv lrange mylist 0 -1</code></pre><h3 id="非阻塞获取所有键列表"><a href="#非阻塞获取所有键列表" class="headerlink" title="非阻塞获取所有键列表"></a>非阻塞获取所有键列表</h3><pre><code>redis-cli --scan --pattern &#39;user:*&#39; | wc -lredis-cli --scan | head -10      </code></pre><blockquote><p><em><strong>–raw和–no-raw</strong></em> 选项在终端上强制进行原始输出。实际上，redis-cli仅当它检测到标准输出是tty（基本上是终端）时，才会显示其他信息，提高可读性。其它情况下，它将自动启用原始输出模式，不带返回值类型。<br><em><strong>-n</strong></em> <dbnum>选择特定编号的数据库，默认的数据库编号为零<br><em><strong>-r <count>和-i<delay></strong></em> 。第一个参数是运行命令的次数，第二个参数配置命令调用之间的延迟（以秒为单位）（十进制数（如0.1，以表示100毫秒）。<br><em><strong>–stat</strong></em> 连续统计模式实时监视Redis实例<br><em><strong>–bigkeys</strong></em> 扫描大键</p></blockquote>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> Redis DB </tag>
             
         </tags>
       
