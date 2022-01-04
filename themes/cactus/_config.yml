@@ -45,7 +45,7 @@ tags_overview: false
 posts_overview:
   show_all_posts: false
   post_count: 5
-  sort_updated: Ture
+  sort_updated: flase
 
 # Customize the archive view.
 # Options:
@@ -53,13 +53,13 @@ posts_overview:
 # Note: this does not work together with pagination, since the pagination
 # plugin will sort pages by date of creation.
 archive:
-  sort_updated: flase
+  sort_updated: true
 
 # Customize the article view.
 # Options:
 #   - show_updated: show the last modification date.
 post:
-  show_updated: flase
+  show_updated: true
 
 # Customize the copyright years
 # Note: if start_year/end_year not provided, will use current year.
@@ -155,7 +155,7 @@ utterances:
   issue_term: pathname
   label: Comment
   theme: github-dark
-  crossorigin: anonymous
+  crossorigin: anonymous # 好像无法设置
 
 # Fill in your Google Analytics tracking ID to enable Google Analytics.
 google_analytics:
