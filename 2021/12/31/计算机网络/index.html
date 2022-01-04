@@ -14,7 +14,7 @@
 <meta property="og:description" content="网络概念子网掩码划分子网，子网掩码机制提供了子网划分的方法。将IP划分成网络地址和主机地址。其作用是：减少网络上的通信量；节省IP地址；便于管理； 解决物理网络本身的某些问题。使用子网掩码划分子网后，子网内可以通信，跨子网不能通信，子网间通信应该使用路由器，并正确配置静态路由信息。最常用的子网掩码 255.255.255.0，能够提供256-2个在同一网段（都在局域网）的主机ip。 路由器和交换机">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-12-31T06:30:00.000Z">
-<meta property="article:modified_time" content="2022-01-04T03:25:25.266Z">
+<meta property="article:modified_time" content="2022-01-04T03:34:29.104Z">
 <meta property="article:author" content="Authur">
 <meta property="article:tag" content="network UFW Iptables firewall-cmd 路由配置">
 <meta name="twitter:card" content="summary">
@@ -134,7 +134,7 @@
       
         <time datetime="2021-12-31T06:30:00.000Z" itemprop="datePublished">2021-12-31</time>
         
-        (Updated: <time datetime="2022-01-04T03:25:25.266Z" itemprop="dateModified">2022-01-04</time>)
+        (Updated: <time datetime="2022-01-04T03:34:29.104Z" itemprop="dateModified">2022-01-04</time>)
         
       
     </div>
@@ -157,7 +157,7 @@
     <h1 id="网络概念"><a href="#网络概念" class="headerlink" title="网络概念"></a>网络概念</h1><h2 id="子网掩码"><a href="#子网掩码" class="headerlink" title="子网掩码"></a>子网掩码</h2><p>划分子网，子网掩码机制提供了子网划分的方法。将IP划分成网络地址和主机地址。其作用是：<strong>减少网络上的通信量；节省IP地址；便于管理；</strong> 解决物理网络本身的某些问题。使用子网掩码划分子网后，子网内可以通信，跨子网不能通信，子网间通信应该使用路由器，并正确配置静态路由信息。<br>最常用的子网掩码 255.255.255.0，能够提供256-2个在同一网段（都在局域网）的主机ip。</p>
 <h2 id="路由器和交换机的区别。"><a href="#路由器和交换机的区别。" class="headerlink" title="路由器和交换机的区别。"></a>路由器和交换机的区别。</h2><p>如果是使用交换机，则接入网线生成的 IP 是和原宽带的 IP 是在同一网段的。如果使用的是路由器，宽带接入 WLAN 口，开发板网线和电脑网线接在 LAN 口，则开发板网段和电脑网段处于同一网段，但和宽带不在同一网段。也就是路由器会生 成一个新的网段供开发板和电脑使用。</p>
 <h2 id="网关"><a href="#网关" class="headerlink" title="网关"></a>网关</h2><h2 id="路由配置"><a href="#路由配置" class="headerlink" title="路由配置"></a>路由配置</h2><p>将配置</p>
-<h1 id="网络配置工具"><a href="#网络配置工具" class="headerlink" title="网络配置工具"></a>网络配置工具</h1><p>ifconfig: interface config<br>ip addr<br>iwlist: wireless<br>iwconfig</p>
+<h1 id="网络配置工具"><a href="#网络配置工具" class="headerlink" title="网络配置工具"></a>网络配置工具</h1><p><strong>ifconfig(interface config)<br>ip addr<br>iwlist: scan wireless list<br>iwconfig</strong></p>
 <p>列出无线网卡可以接入的热点</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ iwlist wlan0 scan | grep SSID</span><br></pre></td></tr></table></figure>
 
