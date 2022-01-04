@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "redis.md",
+            "file": "Linux基础知识.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "redis.md",
+                "file": "Linux基础知识.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -89,13 +89,13 @@
   },
   "active": "b776ae67a85c4683",
   "lastOpenFiles": [
-    "redis.md",
     "Linux基础知识.md",
-    "计算机网络.md",
-    "Nginx使用.md",
-    "systemd-journald-service.md",
     "centos 防火墙.md",
     "根文件系统rootfs简介.md",
+    "计算机网络.md",
+    "systemd-journald-service.md",
+    "Nginx使用.md",
+    "redis.md",
     "hello-world.md",
     "未命名.md",
     "systemd-journald.md"
