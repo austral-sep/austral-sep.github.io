@@ -19,6 +19,8 @@ nav:
   articles: /archives/
   projects: http://github.com/austral-sep
   search: /search/
+  tags: /tags/
+  categories: /categories/
   # LINK_NAME: URL
 
 
