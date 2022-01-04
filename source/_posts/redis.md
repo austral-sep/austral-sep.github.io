@@ -1,13 +1,13 @@
 ---
 title: Redis使用
 date: 2021-12-31 14:30:00
-tag: Redis; DB
+tag: Redis DB
 ---
 
-; [命令详解](https://www.php.cn/redis/444414.html)
+;[命令详解](https://www.php.cn/redis/444414.html)
 ## 定义
 Redis 是一个key-value 存储系统，是跨平台的非关系型数据库。
-Redis 是一个开源的使用 ANSI C 语言编写、遵守 BSD 协议、**支持网络、可基于内存、分布式、可持久化**的键值对(Key-Value)存储数据库，并提供多种语言的 API。Redis 通常被称为数据结构服务器，因为值（value）可以是**字符串(String)、哈希(Hash)、列表(list)、集合(sets)和有序集合(sorted sets)**等类型。
+Redis 是一个开源的使用 ANSI C 语言编写、遵守 BSD 协议、**支持网络、可基于内存、分布式、可持久化**的键值对(Key-Value)存储数据库，并提供多种语言的 API。Redis 通常被称为数据结构服务器，因为值（value）可以是<font color="red">**字符串(String)、哈希(Hash)、列表(list)、集合(sets)和有序集合(sorted sets)**</font>等类型。
 
 ## 优点
 
