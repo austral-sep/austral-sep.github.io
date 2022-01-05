@@ -77,7 +77,7 @@ makefile中，一个规则中可以有多个目标，规则所定义的命令对
 																 
 
 ## 常见函数
-[大佬整理]([https://zhuanlan.zhihu.com/p/362917196](https://zhuanlan.zhihu.com/p/362917196))
+[大佬整理](https://zhuanlan.zhihu.com/p/362917196](https://zhuanlan.zhihu.com/p/362917196)
 
 通配符wildcard，Makefile的通配符与Bash的一致，主要由  * 代表匹配0或者任意个字符、 ? 代表匹配任意一个字符、 [] 代表。
 通配符的转义：\\\*...
