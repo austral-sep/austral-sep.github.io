@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Markfile语法规则的格式：&lt;target&gt;  :  &lt;prerequisites&gt; [tab]    &lt;commands&gt;  &lt;target&gt;: 目标&lt;prerequisites&gt;: 前置条件，或者通俗的称之为依赖。&lt;commands&gt;: 命令，由单独各行或多行shell命令组成，如果某规则有n个shell命令行构成，而">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Markfile语法详解">
+<meta property="og:url" content="http://ryuk.ml/2022/01/05/Makefile%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:site_name" content="DEATH NOTE">
+<meta property="og:description" content="Markfile语法规则的格式：&lt;target&gt;  :  &lt;prerequisites&gt; [tab]    &lt;commands&gt;  &lt;target&gt;: 目标&lt;prerequisites&gt;: 前置条件，或者通俗的称之为依赖。&lt;commands&gt;: 命令，由单独各行或多行shell命令组成，如果某规则有n个shell命令行构成，而">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-05T07:50:00.000Z">
+<meta property="article:modified_time" content="2022-01-05T08:59:53.404Z">
+<meta property="article:author" content="Austral-sep">
+<meta property="article:tag" content="Blog cactus">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Markfile语法详解</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2022/01/04/markdown%20%E8%89%B2%E5%BD%A9%E8%AF%95%E9%AA%8C/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://ryuk.ml/2022/01/05/Makefile%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://ryuk.ml/2022/01/05/Makefile%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3/&text=Markfile语法详解"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://ryuk.ml/2022/01/05/Makefile%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3/&title=Markfile语法详解"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://ryuk.ml/2022/01/05/Makefile%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3/&is_video=false&description=Markfile语法详解"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Markfile语法详解&body=Check out this article: http://ryuk.ml/2022/01/05/Makefile%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://ryuk.ml/2022/01/05/Makefile%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3/&title=Markfile语法详解"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://ryuk.ml/2022/01/05/Makefile%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3/&title=Markfile语法详解"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://ryuk.ml/2022/01/05/Makefile%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3/&title=Markfile语法详解"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://ryuk.ml/2022/01/05/Makefile%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3/&title=Markfile语法详解"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://ryuk.ml/2022/01/05/Makefile%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3/&name=Markfile语法详解&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://ryuk.ml/2022/01/05/Makefile%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3/&t=Markfile语法详解"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Markfile%E8%AF%AD%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">Markfile语法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%84%E5%88%99%E7%9A%84%E6%A0%BC%E5%BC%8F%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">规则的格式：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%95%E4%B8%BA%E4%BC%AA%E7%9B%AE%E6%A0%87%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">何为伪目标？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.3.</span> <span class="toc-text">静态模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-number">1.4.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0"><span class="toc-number">1.5.</span> <span class="toc-text">常见函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#subst"><span class="toc-number">1.5.1.</span> <span class="toc-text">subst</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#patsubst"><span class="toc-number">1.5.2.</span> <span class="toc-text">patsubst</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#notdir"><span class="toc-number">1.5.3.</span> <span class="toc-text">notdir</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#addsuffix"><span class="toc-number">1.5.4.</span> <span class="toc-text">addsuffix</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#foreach"><span class="toc-number">1.5.5.</span> <span class="toc-text">foreach</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#filter-%E4%B8%8E-filter-out"><span class="toc-number">1.5.6.</span> <span class="toc-text">filter 与 filter-out</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#strip"><span class="toc-number">1.5.7.</span> <span class="toc-text">strip</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#findstring"><span class="toc-number">1.5.8.</span> <span class="toc-text">findstring</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#call"><span class="toc-number">1.5.9.</span> <span class="toc-text">call</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E4%B8%8E%E5%BE%AA%E7%8E%AF"><span class="toc-number">1.6.</span> <span class="toc-text">判断与循环</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Markfile语法详解
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Austral-sep</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-01-05T07:50:00.000Z" itemprop="datePublished">2022-01-05</time>
+        
+        (Updated: <time datetime="2022-01-05T08:59:53.404Z" itemprop="dateModified">2022-01-05</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/markfile/">markfile</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="Markfile语法"><a href="#Markfile语法" class="headerlink" title="Markfile语法"></a>Markfile语法</h1><h2 id="规则的格式："><a href="#规则的格式：" class="headerlink" title="规则的格式："></a><strong>规则的格式：</strong></h2><pre><code>&lt;target&gt;  :  &lt;prerequisites&gt;
+[tab]    &lt;commands&gt;
+</code></pre>
+<p><strong><code>&lt;target&gt;</code></strong>: 目标<br><strong><code>&lt;prerequisites&gt;</code></strong>: 前置条件，或者通俗的称之为依赖。<br><strong><code>&lt;commands&gt;</code></strong>: 命令，由单独各行或多行<font style = "background : rgb(200,100,100)">shell命令</font>组成，如果某规则有n个shell命令行构成，而相互之间没有用’;’和’\‘连接起来的话，就是相互之间没有关联的shell命令，相互之间也不能变量共享。</p>
+<p><strong>多行命令的格式</strong>：</p>
+<ul>
+<li><font color = red>.ONESHELL:</font> </li>
+<li>在同一行用’;’分割</li>
+<li>在不同行用’;\‘分割</li>
+</ul>
+<p><em>每条规则就明确两件事：构建目标的前置条件是什么，以及如何构建。</em><br>因此其中”目标”是必需的，不可省略；”前置条件”和”命令”都是可选的，但是两者之中必须至少存在一个。</p>
+<h2 id="何为伪目标？"><a href="#何为伪目标？" class="headerlink" title="何为伪目标？"></a>何为伪目标？</h2><p>伪目标不生成文件，只是充当一个标签的作用。但可以其本身可以充当依赖。<br>声明all、clean 和 target 这三个伪目标:  <strong><code>.PHONY:  all clean target</code></strong></p>
+<h2 id="静态模式"><a href="#静态模式" class="headerlink" title="静态模式"></a>静态模式</h2><p>makefile中，一个规则中可以有多个目标，规则所定义的命令对所有的目标有效。一个具有多目标的规则相当于多个规则。使用多目标可以使makefile文件变得简洁。</p>
+<p>静态模式规则是这样一个规则：规则存在多个目标，并且不同的目标可以根据目标文件的名字来自动构造出依赖文件。</p>
+<p>静态模式可以更加容易地定义多目标的规则，可以让我们的规则变得更加的有弹性和灵活。</p>
+<p>语法：</p>
+<pre><code> &lt;targets ...&gt;: &lt;target-pattern&gt;: &lt;prereq-patterns ...&gt;
+ [tab]    &lt;commands&gt; 
+</code></pre>
+<p><strong><code>&lt;targets&gt;</code></strong>: 定义了一系列的目标文件，可以有通配符。是目标的一个集合。<br><strong><code>&lt;target-parrtern&gt;</code></strong>: 是指明了targets的模式，也就是的目标集模式。<br><strong><code>&lt;prereq-parrterns&gt;</code></strong>: 是目标的依赖模式，它对target-parrtern形成的模式再进行一次依赖目标的定义。</p>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><ul>
+<li><p><font color = "#5a93a2"># </font>: 表示注释</p>
+</li>
+<li><p><font color = "#5a93a2">赋值 </font>: 可以有空格 四种赋值运算符( = 在执行时扩展，允许递归扩展、:= 在定义时扩展、?= 只有变量为空时才赋值、+= 将值追加到变量的尾端)</p>
+</li>
+<li><p><font color = "#5a93a2">$</font> : 展开makefile中定义的变量，对变量的扩展高优先</p>
+</li>
+<li><p><font color = "#5a93a2">$$</font> : 展开makefile命令行中的shell变量</p>
+</li>
+<li><p><font color = "#5a93a2">@</font> : 取消回显echoing，通常配合echo使用，@echo</p>
+</li>
+<li><p><font color = "#5a93a2">-</font> : 忽略删除创建文件时的出错。比如 rm 一个并不存在时的文件时，不会因为出错而终止。也可以通过 rm -f 的方式避免。</p>
+</li>
+<li><p><font color = "#5a93a2">模式匹配</font> ，模式字符为%，指匹配任何非空字符串。静态模式规则，和</p>
+</li>
+<li><p><font color = "#5a93a2">内置变量</font>，如$(cc): 代表环境变量中的编译器、 $(MAKE): 代表环境变量中的make版本</p>
+</li>
+<li><p><font color = "#5a93a2">自动变量</font> :</p>
+<ul>
+<li><p>$@: 代指当前目标</p>
+</li>
+<li><p>$&lt;: 指代第一个前置条件</p>
+</li>
+<li><p>$?: 指代比目标更新的所有前置条件</p>
+</li>
+<li><p>$^: 指代所有前置条件</p>
+</li>
+<li><p>$*: 指代匹配符 % 匹配的部分</p>
+</li>
+</ul>
+</li>
+<li><p><font color = "#5a93a2">$(@D) 和 $(@F)</font> : 分别指向 $@ 的目录名和文件名。比如，$@是 src/input.c，那么$(@D) 的值为 src，$(@F) 的值为 input.c。$(&lt;D) 和 $(&lt;F) : 同上，分别指向 $&lt; 的目录名和文件名</p>
+</li>
+</ul>
+<h2 id="常见函数"><a href="#常见函数" class="headerlink" title="常见函数"></a>常见函数</h2><p><a href="%5Bhttps://zhuanlan.zhihu.com/p/362917196%5D(https://zhuanlan.zhihu.com/p/362917196)">大佬整理</a></p>
+<p>通配符wildcard，Makefile的通配符与Bash的一致，主要由  * 代表匹配0或者任意个字符、 ? 代表匹配任意一个字符、 [] 代表。<br>通配符的转义：\*…<br>即使没有.o文件，也强制使用通配符: OBJ = ${wildcard *.o}</p>
+<h3 id="subst"><a href="#subst" class="headerlink" title="subst"></a>subst</h3><p>函数用来文本替换，格式如下。</p>
+<p><code>$(subst from,to,text)</code></p>
+<h3 id="patsubst"><a href="#patsubst" class="headerlink" title="patsubst"></a>patsubst</h3><p>patsubst 函数用于模式匹配的替换，格式如下。</p>
+<p><code>$(patsubst pattern,replacement,text)</code></p>
+<h3 id="notdir"><a href="#notdir" class="headerlink" title="notdir"></a>notdir</h3><p>说明：去除文件名中的路径信息 示例：</p>
+<p><code>SRC = ( notdir ./src/a.c )</code></p>
+<h3 id="addsuffix"><a href="#addsuffix" class="headerlink" title="addsuffix"></a>addsuffix</h3><p>加后缀函数—addsuffix。 语法：</p>
+<p><code>$(addsuffix SUFFIX,NAMES…)</code></p>
+<h3 id="foreach"><a href="#foreach" class="headerlink" title="foreach"></a>foreach</h3><p>foreach函数和别的函数非常的不一样。因为这个函数是用来做循环用的 语法是：</p>
+<p><code>$(foreach &lt;var&gt;,&lt;list&gt;,&lt;text&gt; )</code></p>
+<p>这个函数的意思是，把参数中的单词逐一取出放到参数所指定的变量中，然后再执行所包含的表达式。</p>
+<h3 id="filter-与-filter-out"><a href="#filter-与-filter-out" class="headerlink" title="filter 与 filter-out"></a>filter 与 filter-out</h3><p><code>$(filter pattern…,text) 和 $(filter-out pattern…,text)</code></p>
+<p>函数名称 ：反过滤函数—filter-out “filter-out”函数也可以用来去除一个变量中的某些字符串（实现和“filter”函数相反）</p>
+<p><code>$(filter-out PATTERN…,TEXT) </code></p>
+<h3 id="strip"><a href="#strip" class="headerlink" title="strip"></a>strip</h3><p><code>$(strip string)</code><br>文本精简，将文本中前导和尾随的空格删除，在文本中存在多个连续空格时，使用一个空格替换。</p>
+<h3 id="findstring"><a href="#findstring" class="headerlink" title="findstring"></a>findstring</h3><p><code>$(findstring find,in) </code><br>在主文本中寻找子文本<br>顾名思义，这是文本查找函数，在in中寻找是否有find文本。参数：<br>find : 子文本<br>in ： 主文本<br>如果in中存在find，返回find，否则返回””(空文本)。  </p>
+<h3 id="call"><a href="#call" class="headerlink" title="call"></a>call</h3><p><code>$(call variable,param,param,…)</code><br>call函数在makefile中是一个特殊的函数，因为它的作用就是创建一个新的函数。你可以使用call函数创建各种实现复杂功能的函数。</p>
+<h2 id="判断与循环"><a href="#判断与循环" class="headerlink" title="判断与循环"></a>判断与循环</h2><table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ifeq</td>
+<td>判断参数是否相等，相等为true，不相等为false</td>
+</tr>
+<tr>
+<td>ifnef</td>
+<td>判断参数是否不相等，不相等为true，相等为false</td>
+</tr>
+<tr>
+<td>ifdef</td>
+<td>判断参数是否有值，有值为true，没有值为false</td>
+</tr>
+<tr>
+<td>ifndef</td>
+<td>判断参数是否没有值，没有值为true，有值为false</td>
+</tr>
+</tbody></table>
+<p>使用方式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ifeq (ARG1,ARG2)</span><br><span class="line">ifeq &quot;ARG1&quot; &quot;ARG2&quot;</span><br><span class="line">ifeq &#x27;ARG1&#x27; &#x27;ARG2&#x27;</span><br><span class="line">ifeq &quot;ARG1&quot; &#x27;ARG2&#x27;</span><br><span class="line">ifeq &#x27;ARG1&#x27; &quot;ARG2&quot;</span><br></pre></td></tr></table></figure>
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Markfile%E8%AF%AD%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">Markfile语法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%84%E5%88%99%E7%9A%84%E6%A0%BC%E5%BC%8F%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">规则的格式：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%95%E4%B8%BA%E4%BC%AA%E7%9B%AE%E6%A0%87%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">何为伪目标？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.3.</span> <span class="toc-text">静态模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-number">1.4.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0"><span class="toc-number">1.5.</span> <span class="toc-text">常见函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#subst"><span class="toc-number">1.5.1.</span> <span class="toc-text">subst</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#patsubst"><span class="toc-number">1.5.2.</span> <span class="toc-text">patsubst</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#notdir"><span class="toc-number">1.5.3.</span> <span class="toc-text">notdir</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#addsuffix"><span class="toc-number">1.5.4.</span> <span class="toc-text">addsuffix</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#foreach"><span class="toc-number">1.5.5.</span> <span class="toc-text">foreach</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#filter-%E4%B8%8E-filter-out"><span class="toc-number">1.5.6.</span> <span class="toc-text">filter 与 filter-out</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#strip"><span class="toc-number">1.5.7.</span> <span class="toc-text">strip</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#findstring"><span class="toc-number">1.5.8.</span> <span class="toc-text">findstring</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#call"><span class="toc-number">1.5.9.</span> <span class="toc-text">call</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E4%B8%8E%E5%BE%AA%E7%8E%AF"><span class="toc-number">1.6.</span> <span class="toc-text">判断与循环</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://ryuk.ml/2022/01/05/Makefile%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://ryuk.ml/2022/01/05/Makefile%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3/&text=Markfile语法详解"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://ryuk.ml/2022/01/05/Makefile%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3/&title=Markfile语法详解"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://ryuk.ml/2022/01/05/Makefile%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3/&is_video=false&description=Markfile语法详解"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Markfile语法详解&body=Check out this article: http://ryuk.ml/2022/01/05/Makefile%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://ryuk.ml/2022/01/05/Makefile%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3/&title=Markfile语法详解"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://ryuk.ml/2022/01/05/Makefile%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3/&title=Markfile语法详解"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://ryuk.ml/2022/01/05/Makefile%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3/&title=Markfile语法详解"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://ryuk.ml/2022/01/05/Makefile%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3/&title=Markfile语法详解"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://ryuk.ml/2022/01/05/Makefile%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3/&name=Markfile语法详解&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://ryuk.ml/2022/01/05/Makefile%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3/&t=Markfile语法详解"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2021-2022
+    Austral-sep
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'austral-sep/austral-sep.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-dark';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>
