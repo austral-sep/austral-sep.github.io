@@ -2,6 +2,8 @@
 title: Nginx使用
 date: 2021-12-30 12:30:00
 tags: web轻量服务器
+categories:
+- 网页
 ---
 
 # *Nginx*

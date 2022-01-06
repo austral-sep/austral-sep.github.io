@@ -2,6 +2,8 @@
 title: systemd-journald系统服务疯狂占用内存和CPU
 date: 2021-12-29 16:39:32
 tags: journald
+categoris:
+- Linux
 ---
 ## 原因
 systemd-journald是Linux下的日志系统。该日志系统默认将日志保存在内存里的/run/log/journal文件夹中。这样将占用大量内存，造成系统资源紧张，进程之间相互夺取资源，从而导致系统不稳定。解决方法是创建立/var/log/journal文件夹，并重启journald服务即可。
