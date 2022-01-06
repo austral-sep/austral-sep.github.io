@@ -2,7 +2,7 @@
 title: systemd-journald系统服务疯狂占用内存和CPU
 date: 2021-12-29 16:39:32
 tags: journald
-categoris:
+categories:
 - Linux
 ---
 ## 原因
