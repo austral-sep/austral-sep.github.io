@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="Markfile语法规则的格式：&lt;target&gt;  :  &lt;prerequisites&gt; [tab]    &lt;commands&gt;  &lt;target&gt;: 目标&lt;prerequisites&gt;: 前置条件，或者通俗的称之为依赖。&lt;commands&gt;: 命令，由单独各行或多行shell命令组成，如果某规则有n个shell命令行构成，而">
+    <meta name="description" content="Markfile语法规则的格式：[[ANOS_README]]      :      [tab]     &lt;target&gt;: 目标&lt;prerequisites&gt;: 前置条件，或者通俗的称之为依赖。&lt;commands&gt;: 命令，由单独各行或多行shell命令组成，如果某规则有n个shell命令行构成，而相互之间没有用’;’和’\‘连接起来的话，就是相互之间没有关">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Markfile语法详解">
 <meta property="og:url" content="http://ryuk.ml/2022/01/05/Makefile%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3/index.html">
 <meta property="og:site_name" content="DEATH NOTE">
-<meta property="og:description" content="Markfile语法规则的格式：&lt;target&gt;  :  &lt;prerequisites&gt; [tab]    &lt;commands&gt;  &lt;target&gt;: 目标&lt;prerequisites&gt;: 前置条件，或者通俗的称之为依赖。&lt;commands&gt;: 命令，由单独各行或多行shell命令组成，如果某规则有n个shell命令行构成，而">
+<meta property="og:description" content="Markfile语法规则的格式：[[ANOS_README]]      :      [tab]     &lt;target&gt;: 目标&lt;prerequisites&gt;: 前置条件，或者通俗的称之为依赖。&lt;commands&gt;: 命令，由单独各行或多行shell命令组成，如果某规则有n个shell命令行构成，而相互之间没有用’;’和’\‘连接起来的话，就是相互之间没有关">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-01-05T07:50:00.000Z">
 <meta property="article:modified_time" content="2022-01-05T07:50:00.000Z">
@@ -154,9 +154,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="Markfile语法"><a href="#Markfile语法" class="headerlink" title="Markfile语法"></a>Markfile语法</h1><h2 id="规则的格式："><a href="#规则的格式：" class="headerlink" title="规则的格式："></a><strong>规则的格式：</strong></h2><pre><code>&lt;target&gt;  :  &lt;prerequisites&gt;
-[tab]    &lt;commands&gt;
-</code></pre>
+    <h1 id="Markfile语法"><a href="#Markfile语法" class="headerlink" title="Markfile语法"></a>Markfile语法</h1><h2 id="规则的格式："><a href="#规则的格式：" class="headerlink" title="规则的格式："></a><strong>规则的格式：</strong></h2><p>[[ANOS_README]]<br>    <target>  :  <prerequisites><br>    [tab]    <commands></p>
 <p><strong><code>&lt;target&gt;</code></strong>: 目标<br><strong><code>&lt;prerequisites&gt;</code></strong>: 前置条件，或者通俗的称之为依赖。<br><strong><code>&lt;commands&gt;</code></strong>: 命令，由单独各行或多行<font style = "background : rgb(200,100,100)">shell命令</font>组成，如果某规则有n个shell命令行构成，而相互之间没有用’;’和’\‘连接起来的话，就是相互之间没有关联的shell命令，相互之间也不能变量共享。</p>
 <p><strong>多行命令的格式</strong>：</p>
 <ul>
