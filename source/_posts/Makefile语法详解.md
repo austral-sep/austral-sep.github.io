@@ -7,7 +7,7 @@ categories:
 # Markfile语法
 
 ## **规则的格式：**
-
+[[ANOS_README]]
 	<target>  :  <prerequisites>
 	[tab]    <commands>
 	
