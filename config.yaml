@@ -1,4 +1,4 @@
-baseurl: https://austral-sep.github.io
+baseurl: https://www.ryuk.ml/
 languageCode: en-us
 theme: hugo-theme-stack
 paginate: 5
